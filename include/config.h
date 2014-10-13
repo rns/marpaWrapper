@@ -1,0 +1,25 @@
+#ifndef MARPAXML_INTERNAL_CONFIG_H
+#define MARPAXML_INTERNAL_CONFIG_H
+
+#define VA_COPY va_copy
+/* #undef NULL_IS_ZEROES */
+#define HAVE_INTTYPES_H 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_SYS_SOCKET_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_FEATURES_H 1
+#define HAVE_LIMITS_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_FCNTL_H 1
+/* #undef HAVE_LOCALTIME_R */
+/* #undef HAVE_IO_H */
+
+#define SIZEOF_VOID_P 4
+#define SIZEOF_UINT 4
+#define SIZEOF_ULONGLONGINT 8
+
+#endif /* MARPAXML_INTERNAL_CONFIG_H */
+
