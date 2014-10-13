@@ -148,7 +148,7 @@ void genericLogger_log(genericLogger_t *genericLoggerp, genericLoggerLevel_t gen
   static const char     *emptyMessages = "Empty message";
   genericLoggerCallback_t  logCallbackp;
   void                  *userDatavp;
-  genericLoggerLevel_t     marpaXmlDefaultLogLeveli;
+  genericLoggerLevel_t     genericLoggerDefaultLogLeveli;
 
   if (genericLoggerp != NULL) {
     if (genericLoggerp->logCallbackp != NULL) {
@@ -157,14 +157,14 @@ void genericLogger_log(genericLogger_t *genericLoggerp, genericLoggerLevel_t gen
       logCallbackp = &_genericLogger_defaultCallback;
     }
     userDatavp = genericLoggerp->userDatavp;
-    marpaXmlDefaultLogLeveli = genericLoggerp->genericLoggerLeveli;
+    genericLoggerDefaultLogLeveli = genericLoggerp->genericLoggerLeveli;
   } else {
     userDatavp = NULL;
     logCallbackp = &_genericLogger_defaultCallback;
-    marpaXmlDefaultLogLeveli = GENERICLOGGER_LOGLEVEL_WARNING;
+    genericLoggerDefaultLogLeveli = GENERICLOGGER_LOGLEVEL_WARNING;
   }
 
-  if (genericLoggerLeveli >= marpaXmlDefaultLogLeveli) {
+  if (genericLoggerLeveli >= genericLoggerDefaultLogLeveli) {
 
     va_start(ap, fmts);
 #ifdef VA_COPY

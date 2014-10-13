@@ -1,5 +1,5 @@
-#ifndef MARPAXML_INTERNAL_MESSAGEBUILDER_H
-#define MARPAXML_INTERNAL_MESSAGEBUILDER_H
+#ifndef MARPAWRAPPER_INTERNAL_MESSAGEBUILDER_H
+#define MARPAWRAPPER_INTERNAL_MESSAGEBUILDER_H
 
 #include <stdarg.h>
 
@@ -19,4 +19,4 @@ char *messageBuilder_internalErrors(void); /* This is returning a STATIC adress 
 char *messageBuilder(const char *fmts, ...);
 char *messageBuilder_ap(const char *fmts, va_list ap);
 
-#endif /* MARPAXML_INTERNAL_MESSAGEBUILDER_H */
+#endif /* MARPAWRAPPER_INTERNAL_MESSAGEBUILDER_H */

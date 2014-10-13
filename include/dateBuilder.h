@@ -1,5 +1,5 @@
-#ifndef MARPAXML_INTERNAL_DATEBUILDER_H
-#define MARPAXML_INTERNAL_DATEBUILDER_H
+#ifndef MARPAWRAPPER_INTERNAL_DATEBUILDER_H
+#define MARPAWRAPPER_INTERNAL_DATEBUILDER_H
 
 #include <stdarg.h>
 
@@ -19,4 +19,4 @@ char *dateBuilder_internalErrors(void);
 /* Output MUST be freed by caller it is != dateBuilder_internalErrors() */
 char *dateBuilder(const char *fmts);
 
-#endif /* MARPAXML_INTERNAL_DATEBUILDER_H */
+#endif /* MARPAWRAPPER_INTERNAL_DATEBUILDER_H */
