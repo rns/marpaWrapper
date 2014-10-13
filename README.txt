@@ -1,10 +1,10 @@
 marpaWrapper
 ============
 
-0. First, compile and install libmarpa.
-   ------------------------------------
+0. Compile and install libmarpa
+   ----------------------------
 
-For example, git clone https://github.com/jeffreykegler/libmarpa, and the,
+For example, git clone https://github.com/jeffreykegler/libmarpa, then:
 
 make dist
 cd dist
@@ -12,8 +12,8 @@ cd dist
 make
 make install
 
-1. Second, build marpaWrapper
-   --------------------------
+1. Build marpaWrapper
+   ------------------
 
 Usage: On Windows: cmake -G "NMake Makefiles", then nmake test
        On UNIX   : cmake -G "UNIX Makefiles", then make test
