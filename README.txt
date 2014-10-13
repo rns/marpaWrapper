@@ -22,4 +22,4 @@ If marpa is in a non-standard path, e.g. /tmp:
 play with $LIB_LIBRARY_PATH or %PATH%, i.e.:
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/lib make
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/lib make test
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/lib build/marpaWrapper_test

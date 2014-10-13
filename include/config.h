@@ -2,7 +2,7 @@
 #define MARPAXML_INTERNAL_CONFIG_H
 
 #define VA_COPY va_copy
-/* #undef NULL_IS_ZEROES */
+#define NULL_IS_ZEROES 1
 #define HAVE_INTTYPES_H 1
 #define HAVE_SYS_TYPES_H 1
 #define HAVE_SYS_SOCKET_H 1
@@ -14,7 +14,7 @@
 #define HAVE_LIMITS_H 1
 #define HAVE_UNISTD_H 1
 #define HAVE_FCNTL_H 1
-/* #undef HAVE_LOCALTIME_R */
+#define HAVE_LOCALTIME_R 1
 /* #undef HAVE_IO_H */
 
 #define SIZEOF_VOID_P 4
