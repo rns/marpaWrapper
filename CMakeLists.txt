@@ -4,10 +4,23 @@ PROJECT (marpaWrapper)
 # Module search path
 #
 SET (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-# ------------
-# Dependencies
-# ------------
-FIND_PACKAGE(Libmarpa)
+# ------------------------------
+# Dependencies: bundled libmarpa
+# ------------------------------
+SET (MARPA_DIR "${PROJECT_SOURCE_DIR}/libmarpa-dist")
+IF (NOT EXISTS "${MARPA_DIR}" OR NOT IS_DIRECTORY "${MARPA_DIR}")
+  FIND_PROGRAM (PERL perl)
+  MESSAGE (STATUS "Preparing ${MARPA_DIR}")
+  GET_FILENAME_COMPONENT (CC_BASENAME ${CMAKE_C_COMPILER} NAME)
+  EXECUTE_PROCESS (
+    COMMAND make -f Makefile_For_Libmarpa.Unix
+    )
+  EXECUTE_PROCESS (
+    COMMAND "${PERL}" win32/do_config_h.pl --use_perl_autoconf --cc "$CC_BASENAME" --ccflags "$CMAKE_C_FLAGS" --obj_ext "$CMAKE_C_OUTPUT_EXTENSION"
+    WORKING_DIRECTORY "${MARPA_DIR}"
+    )
+ENDIF ()
+
 # --------
 # config.h
 # --------
