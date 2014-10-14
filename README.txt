@@ -19,6 +19,16 @@ On UNIX   : make
 On Windows: build\marpaWrapper_test
 On UNIX   : build/marpaWrapper_test
 
+3. Install
+   -------
+
+Make sure you added:
+  -DCMAKE_INSTALL_PREFIX:PATH=/your/install/path  -DCMAKE_BUILD_TYPE:STRING=Release
+to the cmake command of step 0. Then:
+
+On Windows: nmake install
+On UNIX   : make install
+
 9. Clean or distclean
    ------------------
 

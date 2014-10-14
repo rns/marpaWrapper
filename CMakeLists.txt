@@ -86,11 +86,11 @@ ADD_LIBRARY (marpaWrapper SHARED
   ${marpa_lib_src}
   libmarpa-dist/config.h
   )
-SET (MYLIB_VERSION_MAJOR 0)
-SET (MYLIB_VERSION_MINOR 1)
-SET (MYLIB_VERSION_PATCH 1)
-SET (MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_VERSION_PATCH})
-SET_TARGET_PROPERTIES(marpaWrapper PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
+SET (MARPAWRAPPER_VERSION_MAJOR 0)
+SET (MARPAWRAPPER_VERSION_MINOR 1)
+SET (MARPAWRAPPER_VERSION_PATCH 1)
+SET (MARPAWRAPPER_VERSION ${MARPAWRAPPER_VERSION_MAJOR}.${MARPAWRAPPER_VERSION_MINOR}.${MARPAWRAPPER_VERSION_PATCH})
+SET_TARGET_PROPERTIES(marpaWrapper PROPERTIES VERSION ${MARPAWRAPPER_VERSION} SOVERSION ${MARPAWRAPPER_VERSION_MAJOR})
 
 # -----------------------
 # distclean custom target
@@ -125,3 +125,50 @@ ADD_CUSTOM_COMMAND (
 ADD_EXECUTABLE        (marpaWrapper_test ${PROJECT_SOURCE_DIR}/test/marpaWrapper_test.c)
 TARGET_LINK_LIBRARIES (marpaWrapper_test marpaWrapper)
 
+# -------
+# Install
+# -------
+# Loosely based on https://code.google.com/p/bullet/source/browse/trunk/CMakeLists.txt
+IF ("${CMAKE_GENERATOR}" MATCHES "Unix Makefiles")
+  OPTION (INSTALL_LIBS "Set when you want to install libraries" ON)
+ELSE ()
+  IF (APPLE AND FRAMEWORK)
+    OPTION (INSTALL_LIBS "Set when you want to install libraries" ON)
+  ELSE ()
+    #by default, don't enable the 'INSTALL' option for Xcode and MSVC projectfiles
+    OPTION (INSTALL_LIBS "Set when you want to install libraries" OFF)
+  ENDIF ()
+ENDIF ()
+
+IF (INSTALL_LIBS)
+ SET (LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
+ SET (LIB_DESTINATION "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}" CACHE STRING "Library directory name")
+ ## the following are directories where stuff will be installed to
+ SET (INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include/" CACHE PATH "The subdirectory to the header prefix")
+ SET (PKGCONFIG_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}/pkgconfig/" CACHE STRING "Base directory for pkgconfig files")
+ IF (NOT WIN32)
+   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/marpaWrapper.pc.cmake ${CMAKE_CURRENT_BINARY_DIR}/marpaWrapper.pc @ONLY)
+   INSTALL(
+     FILES
+     ${CMAKE_CURRENT_BINARY_DIR}/marpaWrapper.pc
+     DESTINATION
+     ${PKGCONFIG_INSTALL_PREFIX})
+ ENDIF(NOT WIN32)
+ENDIF(INSTALL_LIBS)
+
+#INSTALL of other files requires CMake 2.6
+IF (${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 2.5)
+  OPTION (INSTALL_EXTRA_LIBS "Set when you want extra libraries installed" OFF)
+ENDIF (${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} GREATER 2.5)
+
+# As per https://www.semipol.de/archives/251
+MACRO(INSTALL_HEADERS_WITH_DIRECTORY HEADER_LIST)
+  FOREACH(HEADER ${${HEADER_LIST}})
+    STRING(REGEX MATCH "(.*)[/\\]" DIR ${HEADER})
+    INSTALL(FILES ${HEADER} DESTINATION include/${DIR})
+  ENDFOREACH(HEADER)
+ENDMACRO(INSTALL_HEADERS_WITH_DIRECTORY)
+
+SET(HEADERS include/marpaWrapper.h include/genericLogger.h)
+INSTALL_HEADERS_WITH_DIRECTORY(HEADERS)
+INSTALL(TARGETS marpaWrapper DESTINATION "lib")

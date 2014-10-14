@@ -243,3 +243,5 @@ include/config.h
 libmarpa-dist/config.h
 libmarpa-dist/config_from_autoconf.h
 libmarpa-dist/stamp-h1
+*.pc
+install_manifest.txt
