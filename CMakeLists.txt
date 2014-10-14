@@ -16,7 +16,7 @@ IF (NOT EXISTS "${MARPA_DIR}" OR NOT IS_DIRECTORY "${MARPA_DIR}")
     COMMAND make -f Makefile_For_Libmarpa.Unix
     )
   EXECUTE_PROCESS (
-    COMMAND "${PERL}" win32/do_config_h.pl --use_perl_autoconf --cc "$CC_BASENAME" --ccflags "$CMAKE_C_FLAGS" --obj_ext "$CMAKE_C_OUTPUT_EXTENSION"
+    COMMAND "${PERL}" win32/do_config_h.pl --use_perl_autoconf --cc "${CC_BASENAME}" --ccflags "${CMAKE_C_FLAGS}" --obj_ext "${CMAKE_C_OUTPUT_EXTENSION}"
     WORKING_DIRECTORY "${MARPA_DIR}"
     )
 ENDIF ()
