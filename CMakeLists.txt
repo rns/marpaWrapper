@@ -119,10 +119,6 @@ CHECK_INCLUDE_FILE("features.h" HAVE_FEATURES_H)
 CHECK_INCLUDE_FILE("limits.h" HAVE_LIMITS_H)
 CHECK_INCLUDE_FILE("unistd.h" HAVE_UNISTD_H)
 CHECK_INCLUDE_FILE("io.h" HAVE_IO_H)
-INCLUDE(CheckTypeSize)
-CHECK_TYPE_SIZE ("void*" SIZEOF_VOID_P BUILTIN_TYPES_ONLY)
-CHECK_TYPE_SIZE ("unsigned int" SIZEOF_UINT BUILTIN_TYPES_ONLY)
-CHECK_TYPE_SIZE ("unsigned long long int" SIZEOF_ULONGLONGINT BUILTIN_TYPES_ONLY)
 
 # ------------------------------------------
 # Generate marpaWrapper internal's config.h
