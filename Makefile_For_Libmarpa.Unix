@@ -1,0 +1,21 @@
+#
+# This Makefile is here to get the .c files from libmarpa-bundle
+#
+# A lot of dependencies are needed: perl, cweave, and more I forgot.
+# The purpose of this makefile is ONLY after the libmarpa-bundle has
+# been updated, using:
+#
+# git fetch libmarpa-surround master
+# git subtree pull --prefix bundle/libmarpa-surround libmarpa-surround master --squash
+#
+all: libmarpa_update libmarpa_dist
+
+libmarpa_update:
+	git fetch libmarpa-surround master
+	git subtree pull --prefix bundle/libmarpa-surround libmarpa-surround master --squash
+
+
+libmarpa_dist:
+	rm -rf libmarpa-dist
+	(cd bundle/libmarpa-surround; make dist; cd dist; ./configure --enable-static --disable-shared --prefix=`pwd`/../../../libmarpa-dist; make; make install; cd ..; rm -rf dist)
+	find libmarpa-dist
