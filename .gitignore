@@ -240,4 +240,4 @@ Makefile_For_Libmarpa.Unix
 build/
 cmake_install.cmake
 include/config.h
-libmarpa-dist
+libmarpa-dist/config.h

@@ -1,38 +1,29 @@
 marpaWrapper
 ============
 
-0. Compile and install libmarpa
-   ----------------------------
+0. Generate the Makefile
+   ---------------------
 
-For example, git clone https://github.com/jeffreykegler/libmarpa, then:
+On Windows: cmake -G "NMake Makefiles"
+On UNIX   : cmake -G "Unix Makefiles"
 
-make dist
-cd dist
-./configure --enable-shared --disable-static --prefix=/tmp
-make
-make install
+1. Build the project
+   -----------------
 
-1. Build marpaWrapper
+On Windows: nmake
+On UNIX   : make
+
+2. Run the test suite
    ------------------
 
-Usage: On Windows: cmake -G "NMake Makefiles", then nmake test
-       On UNIX   : cmake -G "UNIX Makefiles", then make test
+On Windows: build\marpaWrapper_test
+On UNIX   : build/marpaWrapper_test
 
-If marpa is in a non-standard path, e.g. /tmp:
+9. Clean or distclean
+   ------------------
 
-/tmp/lib/libmarpa.so
-/tmp/lib/libmarpa-7.2.0.so
-/tmp/lib/libmarpa.la
-/tmp/include
-/tmp/include/marpa_ami.h
-/tmp/include/marpa.h
-/tmp/include/marpa_avl.h
-/tmp/include/marpa_tavl.h
-/tmp/include/marpa_slif.h
-/tmp/include/marpa_obs.h
+On Windows: nmake clean
+On UNIX   : make clean
 
-play with $LIB_LIBRARY_PATH or %PATH%, i.e.:
-
-cmake -G "Unix Makefiles" -DLIBMARPA_ROOT_DIR=/tmp
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/lib make
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/tmp/lib build/marpaWrapper_test
+On Windows: nmake distclean
+On UNIX   : make distclean

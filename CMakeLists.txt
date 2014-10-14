@@ -1,25 +1,31 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 PROJECT (marpaWrapper)
-#
+
+# ------------------
 # Module search path
-#
+# ------------------
 SET (CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
+
+# ------------------
+# Build dependencies
+# ------------------
+FIND_PROGRAM (PERL perl)
+
 # ------------------------------
 # Dependencies: bundled libmarpa
 # ------------------------------
 SET (MARPA_DIR "${PROJECT_SOURCE_DIR}/libmarpa-dist")
-IF (NOT EXISTS "${MARPA_DIR}" OR NOT IS_DIRECTORY "${MARPA_DIR}")
-  FIND_PROGRAM (PERL perl)
-  MESSAGE (STATUS "Preparing ${MARPA_DIR}")
-  GET_FILENAME_COMPONENT (CC_BASENAME ${CMAKE_C_COMPILER} NAME)
-  EXECUTE_PROCESS (
-    COMMAND make -f Makefile_For_Libmarpa.Unix
-    )
-  EXECUTE_PROCESS (
-    COMMAND "${PERL}" win32/do_config_h.pl --use_perl_autoconf --cc "${CC_BASENAME}" --ccflags "${CMAKE_C_FLAGS}" --obj_ext "${CMAKE_C_OUTPUT_EXTENSION}"
-    WORKING_DIRECTORY "${MARPA_DIR}"
-    )
-ENDIF ()
+FILE(GLOB marpa_lib_src libmarpa-dist/*.c)
+ADD_CUSTOM_TARGET (marpaConfig)
+GET_FILENAME_COMPONENT (CC_BASENAME ${CMAKE_C_COMPILER} NAME)
+ADD_CUSTOM_COMMAND (
+  PRE_BUILD
+  COMMENT "Configuring libmarpa"
+  OUTPUT libmarpa-dist/config.h
+  COMMAND "${PERL}"
+  ARGS win32/do_config_h.pl --use_perl_autoconf --cc "${CC_BASENAME}" --ccflags "${CMAKE_C_FLAGS}" --obj_ext "${CMAKE_C_OUTPUT_EXTENSION}"
+  WORKING_DIRECTORY "${MARPA_DIR}"
+  )
 
 # --------
 # config.h
@@ -43,8 +49,8 @@ CHECK_INCLUDE_FILE("unistd.h" HAVE_UNISTD_H)
 CHECK_INCLUDE_FILE("io.h" HAVE_IO_H)
 CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/include/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/config.h)
 
-INCLUDE_DIRECTORIES (${PROJECT_SOURCE_DIR}/include ${LIBMARPA_INCLUDE_DIR})
-SET (CMAKE_SHARED_LINKER_FLAGS ${LIBMARPA_LIBRARIES})
+INCLUDE_DIRECTORIES (${PROJECT_SOURCE_DIR}/include ${MARPA_DIR})
+
 # ---------------------------
 # General overwrite of CFLAGS
 # ---------------------------
@@ -83,14 +89,42 @@ ADD_LIBRARY (marpaWrapper SHARED
   src/manageBuf.c
   src/dateBuilder.c
   src/genericLogger.c
+  ${marpa_lib_src}
+  libmarpa-dist/config.h
   )
-SET_PROPERTY (TARGET marpaWrapper APPEND PROPERTY INCLUDE_DIRECTORIES "${MARPA_INCLUDE_DIR}" "${PROJECT_SOURCE_DIR}")
 SET (MYLIB_VERSION_MAJOR 0)
 SET (MYLIB_VERSION_MINOR 1)
 SET (MYLIB_VERSION_PATCH 1)
 SET (MYLIB_VERSION_STRING ${MYLIB_VERSION_MAJOR}.${MYLIB_VERSION_MINOR}.${MYLIB_VERSION_PATCH})
 SET_TARGET_PROPERTIES(marpaWrapper PROPERTIES VERSION ${MYLIB_VERSION_STRING} SOVERSION ${MYLIB_VERSION_MAJOR})
+ADD_DEPENDENCIES (marpaWrapper marpaConfig)
 
+# -----------------------
+# distclean custom target
+# -----------------------
+ADD_CUSTOM_TARGET (distclean)
+SET(DISTCLEANED
+  build
+  CMakeFiles
+  CMakeCache.txt
+  Makefile
+  cmake_install.cmake
+  "${MARPA_DIR}/config.log"
+  "${MARPA_DIR}/config.h"
+  "${MARPA_DIR}/config_from_autoconf.h"
+  "${MARPA_DIR}/stamp-h1"
+  include/config.h
+  GLOB *vcxproj*
+  GLOB *sln
+  GLOB *suo
+  )
+ADD_CUSTOM_COMMAND (
+  DEPENDS clean
+  COMMENT "distclean"
+  COMMAND "${PERL}"
+  ARGS    -MExtUtils::Command -e rm_rf ${DISTCLEANED}
+  TARGET  distclean
+  )
 
 # -----------
 # Executables
