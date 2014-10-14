@@ -241,3 +241,5 @@ build/
 cmake_install.cmake
 include/config.h
 libmarpa-dist/config.h
+libmarpa-dist/config_from_autoconf.h
+libmarpa-dist/stamp-h1
