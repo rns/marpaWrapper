@@ -17,5 +17,5 @@ libmarpa_update:
 
 libmarpa_dist:
 	rm -rf libmarpa-dist
-	(cd bundle/libmarpa-surround; make dist; cd dist; ./configure --enable-static --disable-shared --prefix=`pwd`/../../../libmarpa-dist; make; make install; cd ..; rm -rf dist)
+	(cd bundle/libmarpa-surround; rm -rf dist *tar.gz; make dist; cp -pr dist ../../libmarpa-dist)
 	find libmarpa-dist
