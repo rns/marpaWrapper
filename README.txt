@@ -7,8 +7,10 @@ marpaWrapper
 On Windows: cmake -G "NMake Makefiles"
 On UNIX   : cmake -G "Unix Makefiles"
 
-To eventually install in a directory of your choice, add : -DCMAKE_INSTALL_PREFIX:PATH=/your/install/path
-To disable the (expensive) support of TRACE loglevel, add: -DCMAKE_BUILD_TYPE:STRING=Release
+To eventually install in a directory of your choice, add :
+  -DCMAKE_INSTALL_PREFIX:PATH=/your/install/path
+To disable the (expensive) support of TRACE loglevel, add:
+  -DCMAKE_BUILD_TYPE:STRING=Release
 
 1. Build the project
    -----------------
