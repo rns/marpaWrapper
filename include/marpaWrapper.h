@@ -1,6 +1,7 @@
 #ifndef MARPAWRAPPER_INTERNAL_MARPAWRAPPER_H
 #define MARPAWRAPPER_INTERNAL_MARPAWRAPPER_H
 
+#include "marpaWrapper_Export.h"
 #include <stddef.h>                  /* size_t definition */
 
 /* Convention is:
@@ -107,15 +108,15 @@ typedef struct marpaWrapperOption {
   marpaWrapperBool_t             warningIsIgnoredb;      /* Default: MARPAWRAPPER_BOOL_FALSE                                          */
   marpaWrapperBool_t             unsortedEventsb;        /* Default: MARPAWRAPPER_BOOL_FALSE. Completed, then nulled, then predicted. */
 } marpaWrapperOption_t;
-marpaWrapper_t           *marpaWrapper_newp(marpaWrapperOption_t *marpaWrapperOptionp);
-void                      marpaWrapper_destroyv(marpaWrapper_t **marpaWrapperpp);
+MARPAWRAPPER_EXPORT marpaWrapper_t           *marpaWrapper_newp(marpaWrapperOption_t *marpaWrapperOptionp);
+MARPAWRAPPER_EXPORT void                      marpaWrapper_destroyv(marpaWrapper_t **marpaWrapperpp);
 
 /**************************************************/
 /* Phase 1: Grammar definition and precomputation */
 /**************************************************/
-marpaWrapperSymbol_t     *marpaWrapper_g_addSymbolp (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbolOption_t *marpaWrapperSymbolOption);
-marpaWrapperRule_t       *marpaWrapper_g_addRulep   (marpaWrapper_t *marpaWrapperp, marpaWrapperRuleOption_t *marpaWrapperRuleOptionp);
-marpaWrapperBool_t        marpaWrapper_g_precomputeb(marpaWrapper_t *marpaWrapperp);
+MARPAWRAPPER_EXPORT marpaWrapperSymbol_t     *marpaWrapper_g_addSymbolp (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbolOption_t *marpaWrapperSymbolOption);
+MARPAWRAPPER_EXPORT marpaWrapperRule_t       *marpaWrapper_g_addRulep   (marpaWrapper_t *marpaWrapperp, marpaWrapperRuleOption_t *marpaWrapperRuleOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_g_precomputeb(marpaWrapper_t *marpaWrapperp);
 
 /***********************/
 /* Phase 2: Recognizer */
@@ -128,14 +129,14 @@ typedef struct marpaWrapperProgress {
 } marpaWrapperProgress_t;
 
 /* For those wanting to have manual control on recognizer */
-marpaWrapperBool_t        marpaWrapper_r_startb               (marpaWrapper_t *marpaWrapperp);
-marpaWrapperBool_t        marpaWrapper_r_alternativeb         (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, int value, int length);
-marpaWrapperBool_t        marpaWrapper_r_completeb            (marpaWrapper_t *marpaWrapperp);
-marpaWrapperBool_t        marpaWrapper_r_readb                (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, int value, int length);
-marpaWrapperBool_t        marpaWrapper_r_event_activateb      (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, int eventSeti, marpaWrapperBool_t onb);
-marpaWrapperBool_t        marpaWrapper_r_terminals_expectedb  (marpaWrapper_t *marpaWrapperp, size_t *nMarpaWrapperSymbolip, marpaWrapperSymbol_t ***marpaWrapperSymbolppp);
-marpaWrapperBool_t        marpaWrapper_r_terminal_is_expectedb(marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, marpaWrapperBool_t *isExpectedbp);
-marpaWrapperBool_t        marpaWrapper_r_progressb            (marpaWrapper_t *marpaWrapperp, int starti, int endi, size_t *nmarpaWrapperProgressip, marpaWrapperProgress_t ***marpaWrapperProgressppp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_startb               (marpaWrapper_t *marpaWrapperp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_alternativeb         (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, int value, int length);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_completeb            (marpaWrapper_t *marpaWrapperp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_readb                (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, int value, int length);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_event_activateb      (marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, int eventSeti, marpaWrapperBool_t onb);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_terminals_expectedb  (marpaWrapper_t *marpaWrapperp, size_t *nMarpaWrapperSymbolip, marpaWrapperSymbol_t ***marpaWrapperSymbolppp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_terminal_is_expectedb(marpaWrapper_t *marpaWrapperp, marpaWrapperSymbol_t *marpaWrapperSymbolp, marpaWrapperBool_t *isExpectedbp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_r_progressb            (marpaWrapper_t *marpaWrapperp, int starti, int endi, size_t *nmarpaWrapperProgressip, marpaWrapperProgress_t ***marpaWrapperProgressppp);
 
 typedef marpaWrapperBool_t (*marpaWrapper_readerCallback_t)(void *readerCallbackDatavp, marpaWrapperBool_t *endOfInputbp);
 typedef marpaWrapperBool_t (*marpaWrapper_isLexemebCallback_t)(void *marpaWrapperSymbolOptionDatavp, size_t *lengthlp);
@@ -157,7 +158,7 @@ typedef struct marpaWrapperRecognizerOption {
   marpaWrapper_symbolToCharsbCallback_t symbolToCharsbCallbackp;
 } marpaWrapperRecognizerOption_t;
 
-marpaWrapperBool_t marpaWrapper_r_recognizeb(marpaWrapper_t *marpaWrapperp, marpaWrapperRecognizerOption_t *marpaWrapperRecognizerOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t marpaWrapper_r_recognizeb(marpaWrapper_t *marpaWrapperp, marpaWrapperRecognizerOption_t *marpaWrapperRecognizerOptionp);
 
 /******************/
 /* Phase 3: Value */
@@ -187,25 +188,25 @@ typedef struct marpaWrapperStackOption {
   marpaWrapperStackElementCopyCallback_t stackElementCopyCallbackp;              /* Default: NULL                    */
   void                                  *stackElementCopyCallbackUserDatap;      /* Default: NULL                    */
 } marpaWrapperStackOption_t;
-marpaWrapperBool_t        marpaWrapper_vb(marpaWrapper_t *marpaWrapperp, marpaWrapperValueOption_t *marpaWrapperValueOptionp, marpaWrapperStackOption_t *marpaWrapperStackOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_vb(marpaWrapper_t *marpaWrapperp, marpaWrapperValueOption_t *marpaWrapperValueOptionp, marpaWrapperStackOption_t *marpaWrapperStackOptionp);
 
 /*************************/
 /* Default options helper */
 /*************************/
-marpaWrapperBool_t        marpaWrapper_optionDefaultb          (marpaWrapperOption_t *marpaWrapperOptionp);
-marpaWrapperBool_t        marpaWrapper_symbolOptionDefaultb    (marpaWrapperSymbolOption_t *marpaWrapperSymbolOptionp);
-marpaWrapperBool_t        marpaWrapper_ruleOptionDefaultb      (marpaWrapperRuleOption_t *marpaWrapperRuleOptionp);
-marpaWrapperBool_t        marpaWrapper_valueOptionDefaultb     (marpaWrapperValueOption_t *marpaWrapperValueOptionp);
-marpaWrapperBool_t        marpaWrapper_stackOptionDefaultb     (marpaWrapperStackOption_t *marpaWrapperStackOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_optionDefaultb          (marpaWrapperOption_t *marpaWrapperOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_symbolOptionDefaultb    (marpaWrapperSymbolOption_t *marpaWrapperSymbolOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_ruleOptionDefaultb      (marpaWrapperRuleOption_t *marpaWrapperRuleOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_valueOptionDefaultb     (marpaWrapperValueOption_t *marpaWrapperValueOptionp);
+MARPAWRAPPER_EXPORT marpaWrapperBool_t        marpaWrapper_stackOptionDefaultb     (marpaWrapperStackOption_t *marpaWrapperStackOptionp);
 
 /*****************/
 /* Top accessors */
 /*****************/
-genericLogger_t *marpaWrapper_genericLoggerp(marpaWrapper_t *marpaWrapperp);
+MARPAWRAPPER_EXPORT genericLogger_t *marpaWrapper_genericLoggerp(marpaWrapper_t *marpaWrapperp);
 
 /* Generic getter definition */
 #define MARPAWRAPPER_GENERATE_GETTER_DECLARATION(prefix, externalType, externalName) \
-  marpaWrapperBool_t prefix##_##externalName##_getb(prefix##_t * prefix##p, externalType *externalName##p)
+  MARPAWRAPPER_EXPORT marpaWrapperBool_t prefix##_##externalName##_getb(prefix##_t * prefix##p, externalType *externalName##p)
 
 /***************************************************************************************/
 /* From a wrapper opaque pointer, get size of/array of opaque symbol and rule pointers */

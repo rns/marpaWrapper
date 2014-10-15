@@ -245,3 +245,4 @@ libmarpa-dist/config_from_autoconf.h
 libmarpa-dist/stamp-h1
 *.pc
 install_manifest.txt
+include/marpaWrapper_Export.h

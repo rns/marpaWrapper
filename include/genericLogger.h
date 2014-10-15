@@ -1,6 +1,8 @@
 #ifndef GENERICLOGGER_LOG_H
 #define GENERICLOGGER_LOG_H
 
+#include "marpaWrapper_Export.h"
+
 typedef enum genericLoggerLevel {
   GENERICLOGGER_LOGLEVEL_TRACE = 0,
   GENERICLOGGER_LOGLEVEL_DEBUG,
@@ -19,15 +21,15 @@ typedef enum genericLoggerLevel {
 typedef struct genericLogger genericLogger_t;
 typedef void (*genericLoggerCallback_t)(void *userDatavp, genericLoggerLevel_t logLeveli, const char *msgs);
 
-genericLoggerCallback_t genericLogger_defaultLogCallback(void);
+MARPAWRAPPER_EXPORT genericLoggerCallback_t genericLogger_defaultLogCallback(void);
 /* For applications that want to initialize a structure outside of executable blocks: */
-extern void _genericLogger_defaultCallback(void *userDatavp, genericLoggerLevel_t logLeveli, const char *msgs);
+MARPAWRAPPER_EXPORT extern void _genericLogger_defaultCallback(void *userDatavp, genericLoggerLevel_t logLeveli, const char *msgs);
 
-genericLoggerLevel_t    genericLogger_logLevel_seti(genericLogger_t *genericLoggerp, genericLoggerLevel_t logLeveli);
-genericLoggerLevel_t    genericLogger_logLevel_geti(genericLogger_t *genericLoggerp);
+MARPAWRAPPER_EXPORT genericLoggerLevel_t    genericLogger_logLevel_seti(genericLogger_t *genericLoggerp, genericLoggerLevel_t logLeveli);
+MARPAWRAPPER_EXPORT genericLoggerLevel_t    genericLogger_logLevel_geti(genericLogger_t *genericLoggerp);
 
-genericLogger_t        *genericLogger_newp(genericLoggerCallback_t logCallbackp, void *userDatavp, genericLoggerLevel_t genericLoggerLeveli);
-void                  genericLogger_freev(genericLogger_t **genericLoggerpp);
+MARPAWRAPPER_EXPORT genericLogger_t        *genericLogger_newp(genericLoggerCallback_t logCallbackp, void *userDatavp, genericLoggerLevel_t genericLoggerLeveli);
+MARPAWRAPPER_EXPORT void                  genericLogger_freev(genericLogger_t **genericLoggerpp);
 
 
 /*****************************************/
@@ -43,7 +45,7 @@ typedef struct genericLogger_Option {
 /* logging with no variable parameter */
 /* logging with    variable paramerer(s) */
 
-void genericLogger_log(genericLogger_t *genericLoggerp, genericLoggerLevel_t genericLoggerLeveli, const char *fmts, ...);
+MARPAWRAPPER_EXPORT void genericLogger_log(genericLogger_t *genericLoggerp, genericLoggerLevel_t genericLoggerLeveli, const char *fmts, ...);
 
 #define GENERICLOGGER_LOG0(logLeveli, msgs)      genericLogger_log(genericLoggerp, logLeveli, msgs)
 #define GENERICLOGGER_LOGX(logLeveli, fmts, ...) genericLogger_log(genericLoggerp, logLeveli, fmts, __VA_ARGS__)
