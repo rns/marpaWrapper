@@ -71,7 +71,7 @@ void _genericLogger_defaultCallback(void *userDatavp, genericLoggerLevel_t logLe
     "UNKOWN";
   char   *dates = dateBuilder("%d/%m/%Y %H:%M:%S");
   char   *localMsgs = messageBuilder("%s %9s %s\n", dates, prefixs, (msgs != NULL) ? (char *) msgs : (char *) GENERICLOGGER_LOG_NO_MESSAGE);
-#if (defined(_WIN32) || (_POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE))
+#if (defined(_WIN32) || defined (__CYGWIN__) || (_POSIX_C_SOURCE >= 1 || _XOPEN_SOURCE || _POSIX_SOURCE))
 #ifdef _WIN32
   int filenoStderr = _fileno(stderr);
   size_t bytesWriten = 0;
